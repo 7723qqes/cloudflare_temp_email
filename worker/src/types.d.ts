@@ -11,6 +11,7 @@ type Bindings = {
     RATE_LIMITER: any
     SEND_MAIL: any
     ASSETS: Fetcher
+    AI: Ai
 
     // config
     DEFAULT_LANG: string | undefined
@@ -24,6 +25,8 @@ type Bindings = {
     MAX_ADDRESS_LEN: string | number | undefined
     DEFAULT_DOMAINS: string | string[] | undefined
     DOMAINS: string | string[] | undefined
+    DISABLE_CUSTOM_ADDRESS_NAME: string | boolean | undefined
+    CREATE_ADDRESS_DEFAULT_DOMAIN_FIRST: string | boolean | undefined
     ADMIN_USER_ROLE: string | undefined
     USER_DEFAULT_ROLE: string | UserRole | undefined
     USER_ROLES: string | UserRole[] | undefined
@@ -38,6 +41,7 @@ type Bindings = {
     ENABLE_USER_CREATE_EMAIL: string | boolean | undefined
     DISABLE_ANONYMOUS_USER_CREATE_EMAIL: string | boolean | undefined
     ENABLE_USER_DELETE_EMAIL: string | boolean | undefined
+    ENABLE_ADDRESS_PASSWORD: string | boolean | undefined
     ENABLE_INDEX_ABOUT: string | boolean | undefined
     DEFAULT_SEND_BALANCE: number | string | undefined
     NO_LIMIT_SEND_ROLE: string | undefined | null
@@ -80,9 +84,14 @@ type Bindings = {
     TELEGRAM_BOT_TOKEN: string
     TG_MAX_ADDRESS: number | undefined
     TG_BOT_INFO: string | object | undefined
+    TG_ALLOW_USER_LANG: string | boolean | undefined
 
     // webhook config
     FRONTEND_URL: string | undefined
+
+    // AI extraction config
+    ENABLE_AI_EMAIL_EXTRACT: string | boolean | undefined
+    AI_EXTRACT_MODEL: string | undefined
 }
 
 type JwtPayload = {
@@ -136,4 +145,7 @@ type ParsedEmailContext = {
 type SubdomainForwardAddressList = {
     domains: string[] | undefined | null,
     forward: string,
+    // 来源地址正则匹配 (可选，兼容原配置)
+    sourcePatterns?: string[] | undefined | null,  // 来源地址正则表达式列表
+    sourceMatchMode?: 'any' | 'all' | undefined,   // 匹配模式: any-任一匹配, all-全部匹配
 }
